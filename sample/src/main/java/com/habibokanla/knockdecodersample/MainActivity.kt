@@ -22,11 +22,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun verifyPermissions(): Boolean {
         val hasMicPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == android.content.pm.PackageManager.PERMISSION_GRANTED
-        val hasStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_GRANTED
-        if (!hasMicPermission || !hasStoragePermission) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
+        if (!hasMicPermission) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 100)
         }
-        return hasMicPermission && hasStoragePermission;
+        return hasMicPermission
 
     }
 

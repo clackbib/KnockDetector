@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.IBinder
 import android.os.Vibrator
 import android.support.v4.app.NotificationCompat
+import android.util.Log
 import android.widget.Toast
 import com.habibokanla.knockdetector.KnockDetector
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -67,7 +68,7 @@ class KnockDetectorService : Service() {
                     }
                     vibrator?.vibrate(pattern.toLongArray(), -1)
                 }, {
-                    Toast.makeText(this, "An error occurred during while trying to start knock detection", Toast.LENGTH_LONG).show()
+                    Log.d("Error", it.message, it)
                     stopSelf()
                 })
     }

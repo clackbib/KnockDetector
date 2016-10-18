@@ -84,17 +84,10 @@ class SoundEventFlowable : FlowableOnSubscribe<Boolean> {
 
         fun create(context: Context): Flowable<Boolean> {
             val hasMicPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
-            val hasStoragePermission = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-            if (hasMicPermission && hasStoragePermission) {
+            if (hasMicPermission) {
                 return Flowable.create(SoundEventFlowable(), FlowableEmitter.BackpressureMode.LATEST)
             } else {
-                var message = ""
-                if (!hasMicPermission) {
-                    message = "Missing permissions for Audio recording."
-                }
-                if (!hasStoragePermission) {
-                    message += "Missing permission for Storage. "
-                }
+                val message = "Missing permissions for Audio recording."
                 return Flowable.error(RuntimeException(message))
             }
 
