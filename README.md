@@ -45,7 +45,7 @@ Required permissions
                 
   ....
   
-  disposable.dispose() //Do not forget to dispose of the subscription when not needed, so resources can be release.
+  disposable.dispose() //Do not forget to dispose of the subscription when not needed, so resources can be released.
 
 ```
 TODO:
