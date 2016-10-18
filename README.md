@@ -37,9 +37,9 @@ Required permissions
   disposable.dispose() //Do not forget to dispose of the subscription when not needed, so resources can be release.
 
 ```
-
 TODO:
 ====
 - Provide a calibration API
+- Provide additional configuration options
 - Provide handling for situations where internal microphone is not accessible (Headsets / External Mics)
 - Unit Tests.
