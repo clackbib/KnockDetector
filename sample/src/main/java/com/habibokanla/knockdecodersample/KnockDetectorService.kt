@@ -9,7 +9,7 @@ import android.os.IBinder
 import android.os.Vibrator
 import android.support.v4.app.NotificationCompat
 import android.widget.Toast
-import com.habibokanla.knockdecoder.KnockDetector
+import com.habibokanla.knockdetector.KnockDetector
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

@@ -1,4 +1,4 @@
-package com.habibokanla.knockdecoder
+package com.habibokanla.knockdetector
 
 import android.Manifest
 import android.content.Context

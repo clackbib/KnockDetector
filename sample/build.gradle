@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.habibokanla.knockdecodersample"
-        minSdkVersion 19
+        minSdkVersion 9
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"

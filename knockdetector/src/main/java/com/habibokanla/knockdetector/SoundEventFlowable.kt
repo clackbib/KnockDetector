@@ -1,7 +1,8 @@
-package com.habibokanla.knockdecoder
+package com.habibokanla.knockdetector
 
 import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.support.v4.content.ContextCompat
 import io.reactivex.Flowable
@@ -82,8 +83,8 @@ class SoundEventFlowable : FlowableOnSubscribe<Boolean> {
         val DISCARD_OUTPUT = "/dev/null"
 
         fun create(context: Context): Flowable<Boolean> {
-            val hasMicPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == android.content.pm.PackageManager.PERMISSION_GRANTED
-            val hasStoragePermission = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_GRANTED
+            val hasMicPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
+            val hasStoragePermission = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
             if (hasMicPermission && hasStoragePermission) {
                 return Flowable.create(SoundEventFlowable(), FlowableEmitter.BackpressureMode.LATEST)
             } else {

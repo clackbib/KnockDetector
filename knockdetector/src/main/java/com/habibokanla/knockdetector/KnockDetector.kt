@@ -1,6 +1,8 @@
-package com.habibokanla.knockdecoder
+package com.habibokanla.knockdetector
 
 import android.content.Context
+import com.habibokanla.knockdetector.SoundEventFlowable
+import com.habibokanla.knockdetector.MotionEventFlowable
 import io.reactivex.*
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
