@@ -2,6 +2,19 @@
 
 An Rx Knock detection tool.
 
+<b>How to add to your project:</b>
+```gradle
+allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}
+
+dependencies {
+	compile 'com.github.clackbib:KnockDetector:-SNAPSHOT'
+}
+```
 <b>Usage:</b>
 
 
