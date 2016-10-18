@@ -22,7 +22,7 @@ Required permissions
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                   when(it)
-                    1 -> //Single knocks are ignored internally
+                    //Single knocks are ignored internally
                     2 -> // Action for 2 knocks
                     3 -> //Action for 3 knocks
                   }
