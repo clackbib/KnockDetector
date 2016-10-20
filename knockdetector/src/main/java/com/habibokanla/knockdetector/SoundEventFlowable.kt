@@ -27,7 +27,7 @@ class SoundEventFlowable : FlowableOnSubscribe<Boolean> {
     private constructor()
 
     private var mediaRecorder: MediaRecorder? = null
-    private val spikeThreshold: Int = 17000
+    private val spikeThreshold: Int = 11000
     private var internalSubscription: Disposable? = null
     private var emitter: FlowableEmitter<in Boolean>? = null
     private var isStarted = false
