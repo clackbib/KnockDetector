@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
  * 2016
  * Created by habibokanla on 07/08/2016.
  */
-class KnockDetector(private val context: Context) : FlowableOnSubscribe<Int> {
+class KnockDetector(private val context: Context, val soundThreshold: Int) : FlowableOnSubscribe<Int> {
 
 
     private var emitter: FlowableEmitter<Int>? = null
@@ -26,12 +26,12 @@ class KnockDetector(private val context: Context) : FlowableOnSubscribe<Int> {
         this.emitter = e
         e?.setCancellable { teardown() }
 
-        val mSoundKnockDetector = SoundEventFlowable.create(context)
+        val mSoundKnockDetector = SoundEventFlowable.create(context, soundThreshold)
         val mAccelSpikeEventObservable = MotionEventFlowable.create(context)
 
         subscription = mAccelSpikeEventObservable
-                .join<Boolean, Boolean, Boolean, Boolean>(mSoundKnockDetector, closedWindow(), flowableWindow(), BiFunction { left, right ->
-                    left && right
+                .join<Int, Boolean, Boolean, Boolean>(mSoundKnockDetector, accelWindow(), soundWindow(), BiFunction { left, right ->
+                    true
                 })
                 .debounce(SOUND_DEBOUNCE_DURATION_MS, TimeUnit.MILLISECONDS)
                 .doOnNext { knocks.add(it) }
@@ -52,7 +52,7 @@ class KnockDetector(private val context: Context) : FlowableOnSubscribe<Int> {
      * @Return an Stream representing a window of time during which a sound spike will be considered has a knock,
      * when an accelerometer spike has already been registered
      */
-    private fun flowableWindow(): Function<in Boolean, out Publisher<Boolean>>? {
+    private fun soundWindow(): Function<in Int, out Publisher<Boolean>>? {
         return Function {
             Single.just(true)
                     .delay(DETECTION_WINDOW_MS, TimeUnit.MILLISECONDS)
@@ -61,12 +61,14 @@ class KnockDetector(private val context: Context) : FlowableOnSubscribe<Int> {
     }
 
     /**
-     * @Return a stream representing a closed time window. Since accelerometer spike are more common than sound spikes,
-     * they do not open a detection window.
+     * @Return an Stream representing a window of time during which an accelerometer spike will be considered has a knock,
+     * when an sound spike has already been registered
      */
-    private fun closedWindow(): Function<in Boolean, out Publisher<Boolean>> {
+    private fun accelWindow(): Function<in Boolean, out Publisher<Boolean>> {
         return Function {
-            Completable.complete().toFlowable()
+            Single.just(true)
+                    .delay(DETECTION_WINDOW_MS, TimeUnit.MILLISECONDS)
+                    .toFlowable()
         }
     }
 
@@ -80,8 +82,10 @@ class KnockDetector(private val context: Context) : FlowableOnSubscribe<Int> {
         val SOUND_DEBOUNCE_DURATION_MS = 200L
         val KNOCK_COUNT_DEBOUNCE_S = 1L
 
-        fun create(context: Context): Flowable<Int> {
-            return Flowable.create(KnockDetector(context), FlowableEmitter.BackpressureMode.BUFFER)
+        val DEFAULT_SOUND_THRESHOLD = 10000
+
+        fun create(context: Context, soundThreshold: Int = DEFAULT_SOUND_THRESHOLD): Flowable<Int> {
+            return Flowable.create(KnockDetector(context, soundThreshold), FlowableEmitter.BackpressureMode.BUFFER)
         }
     }
 

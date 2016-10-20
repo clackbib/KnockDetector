@@ -1,4 +1,5 @@
 <resources>
     <string name="Sample">Knock Detector</string>
     <string name="start_detection">Start Detection</string>
+    <string name="calibrate">Calibrate</string>
 </resources>
